@@ -1,0 +1,17 @@
+name: DEV CI
+on:
+  push:
+    branches:
+      - main
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  dev:
+    name: Dev Monolithic Resources
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/reusableMonolithic.yml
+    with: 
+      STAGE: dev
+      DOKKU_APP_NAME: bullmq
+    secrets: inherit

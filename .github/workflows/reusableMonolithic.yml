@@ -1,0 +1,27 @@
+name: Reusable CI
+on:
+  workflow_call:
+    inputs:
+      STAGE:
+          required: true
+          type: string
+      DOKKU_APP_NAME:
+          required: true
+          type: string
+jobs:
+  build:
+    name: Reusable pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create SSH key's
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ../private.key
+          sudo chmod 600 ../private.key
+        shell: bash
+      - name: Build the Docker image
+        run: docker buildx build -t app/${{ inputs.DOKKU_APP_NAME }}:latest .
+      - name: Save Docker
+        run: docker image save app/${{ inputs.DOKKU_APP_NAME }}:latest | bzip2 | ssh -i ${{ github.workspace }}/../private.key -o StrictHostKeyChecking=no ubuntu@ec2-13-54-187-48.ap-southeast-2.compute.amazonaws.com "docker load"
+      - name: Dokku create, deploy and tag
+        run: ssh -i ${{ github.workspace }}/../private.key -o StrictHostKeyChecking=no ubuntu@ec2-13-54-187-48.ap-southeast-2.compute.amazonaws.com "dokku git:from-image ${{ vars.DOKKU_APP_NAME }} app/${{ inputs.DOKKU_APP_NAME }} || true && dokku cleanup && dokku ps:rebuild ${{ inputs.DOKKU_APP_NAME }}"
