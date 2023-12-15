@@ -1,0 +1,34 @@
+{
+  "version": "3",
+  "dialect": "pg",
+  "id": "19c9122f-472e-4fca-9143-dcd3247651ce",
+  "prevId": "0fde098d-705f-4c72-a1d3-adf3caedc12e",
+  "tables": {
+    "queues": {
+      "name": "queues",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": false
+        },
+        "text": {
+          "name": "text",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {}
+    }
+  },
+  "enums": {}
+}

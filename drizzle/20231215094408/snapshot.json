@@ -1,0 +1,28 @@
+{
+  "version": "3",
+  "dialect": "pg",
+  "id": "0fde098d-705f-4c72-a1d3-adf3caedc12e",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "queues": {
+      "name": "queues",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": false
+        },
+        "text": {
+          "name": "text",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {}
+    }
+  },
+  "enums": {}
+}
